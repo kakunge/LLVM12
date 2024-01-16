@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void calc_write(int v)
+void calc_write(int v) {
     printf("The result is: %d\n", v);
 }
 
