@@ -2,7 +2,7 @@
 
 namespace charinfo {
     LLVM_READNONE inline bool isWhitespace(char c) {
-        return c == '' || c == '\t' || c == '\f' || c == '\v' || c == '\r' || c == '\n';
+        return c == ' ' || c == '\t' || c == '\f' || c == '\v' || c == '\r' || c == '\n';
     }
     LLVM_READNONE inline bool isDigit(char c) {
         return c >= '0' && c <= '9';
@@ -25,7 +25,7 @@ void Lexer::next(Token &token) {
     if (charinfo::isLetter(*BufferPtr)) {
         const char* end = BufferPtr + 1;
 
-        while (charinfo:isLetter(*end))
+        while (charinfo::isLetter(*end))
             ++end;
 
         llvm::StringRef Name(BufferPtr, end - BufferPtr);
@@ -36,7 +36,7 @@ void Lexer::next(Token &token) {
     else if (charinfo::isDigit(*BufferPtr)) {
         const char* end = BufferPtr + 1;
 
-        while (charinfo:isDigit(*end))
+        while (charinfo::isDigit(*end))
             ++end;
 
         formToken(token, end, Token::number);

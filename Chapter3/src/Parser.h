@@ -28,7 +28,7 @@ class Parser {
         advance();
         return false;
     }
-    AST *parseCals();
+    AST *parseCalc();
     Expr *parseExpr();
     Expr *parseTerm();
     Expr *parseFactor();

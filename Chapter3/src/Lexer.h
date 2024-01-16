@@ -42,7 +42,7 @@ public:
     void next(Token &token);
 
 private:
-    void fromToken(Token &Result, const char* TokEnd, Token::TokenKind Kind);
+    void formToken(Token &Result, const char* TokEnd, Token::TokenKind Kind);
 };
 #endif
 

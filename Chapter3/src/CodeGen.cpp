@@ -4,7 +4,7 @@
 #include "llvm/IR/LLVMContext.h"
 #include "llvm/Support/raw_ostream.h"
 
-using namespace llvm
+using namespace llvm;
 
 namespace {
     class ToIRVisitor : public ASTVisitor {
@@ -19,7 +19,7 @@ namespace {
         StringMap<Value*> nameMap;
 
 public:
-        ToIRVisitor(Module *M) : M(M), Bulider(M->getContext()) {
+        ToIRVisitor(Module *M) : M(M), Builder(M->getContext()) {
             VoidTy = Type::getVoidTy(M->getContext());
             Int32Ty = Type::getInt32Ty(M->getContext());
             Int8PtrTy = Type::getInt8PtrTy(M->getContext());
@@ -40,7 +40,7 @@ public:
         }
 
         virtual void visit(WithDecl &Node) override {
-            FunctionType *ReadFty = Function::get(Int32Ty, {Int8PtrTy}, false);
+            FunctionType *ReadFty = FunctionType::get(Int32Ty, {Int8PtrTy}, false);
             Function *ReadFn = Function::Create(ReadFty, GlobalValue::ExternalLinkage, "calc_read", M);
             for (auto I = Node.begin(), E = Node.end(); I != E; ++I) {
                 StringRef Var = *I;
@@ -82,7 +82,7 @@ public:
                 V = Builder.CreateNSWMul(Left, Right);
                 break;
             case BinaryOp::Div:
-                V = Builder.CreateNSWDiv(Left, Right);
+                V = Builder.CreateSDiv(Left, Right);
                 break;
             }
         };

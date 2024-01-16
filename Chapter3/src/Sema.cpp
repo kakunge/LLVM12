@@ -1,5 +1,6 @@
 #include "Sema.h"
-#include "llvm/ADT/StringRef.h"
+#include "llvm/ADT/StringSet.h"
+#include "llvm/Support/raw_ostream.h"
 
 namespace {
     class DeclCheck : public ASTVisitor {
@@ -14,9 +15,9 @@ namespace {
         }
 public:
         DeclCheck() : HasError(false) {}
-        bool HasError() { return HasError; }
+        bool hasError() { return HasError; }
         virtual void visit(Factor &Node) override {
-            if (Node.getKind() == Factor.Ident) {
+            if (Node.getKind() == Factor::Ident) {
                 if (Scope.find(Node.getVal()) == Scope.end())
                     error(Not, Node.getVal());
             }
@@ -47,7 +48,7 @@ public:
     };
 }
 
-bool Sema::semantic(AST *Rree) {
+bool Sema::semantic(AST *Tree) {
     if (!Tree)
         return false;
     DeclCheck Check;
